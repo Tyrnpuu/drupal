@@ -1,0 +1,11 @@
+services:
+    web:
+        # image: httpd
+        build: 
+            context: .
+            dockerfile: web.dockerfile
+        ports:
+            - 80:80
+
+volumes:
+    drupaldata:
