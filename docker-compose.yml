@@ -1,11 +1,27 @@
 services:
     web:
-        # image: httpd
         build: 
             context: .
             dockerfile: web.dockerfile
         ports:
             - 80:80
-
+        depends_on:
+            - db
+        networks:
+            - drupal_network
+    db:
+        image: mariadb:latest
+        container_name: drupal_db
+        environment:
+            MYSQL_ROOT_PASSWORD: root_password
+            MYSQL_DATABASE: drupal
+            MYSQL_USER: drupal_user
+            MYSQL_PASSWORD: drupal_password
+        volumes:
+            - db_data:/var/lib/mysql
+        networks:
+            - drupal_network
 volumes:
-    drupaldata:
+    db_data:
+networks:
+    drupal_network:
